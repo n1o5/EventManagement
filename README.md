@@ -171,12 +171,3 @@ FastAPI auto-generates docs at:
 - ReDoc: http://localhost:8000/redoc
 
 ---
-
-## Environment Variables
-
-```env
-DATABASE_URL=postgresql://postgres:password@localhost:5432/eventdb
-SECRET_KEY=your-super-secret-jwt-key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=1440
-```
