@@ -6,6 +6,7 @@ from sqlalchemy import (
     Column, String, Integer, Float, Boolean, DateTime,
     ForeignKey, Enum, Text, UniqueConstraint
 )
+from sqlalchemy import Numeric
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import enum
@@ -60,7 +61,7 @@ class Event(Base):
     event_date    = Column(DateTime, nullable=False)
     total_rows    = Column(Integer, nullable=False, default=10)
     seats_per_row = Column(Integer, nullable=False, default=20)
-    ticket_price  = Column(Float, nullable=False)
+    ticket_price = Column(Numeric(10, 2), nullable=False)
     image_url     = Column(String(500))
     category      = Column(String(100))
     is_published  = Column(Boolean, default=True)
