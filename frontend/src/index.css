@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ink-950 text-ink-100 font-body antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-amber-500 hover:bg-amber-400 text-ink-950 font-semibold px-5 py-2.5 rounded-lg
+           transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-ink-800 hover:bg-ink-700 text-ink-100 font-medium px-5 py-2.5 rounded-lg
+           transition-all duration-200 border border-ink-600;
+  }
+
+  .btn-ghost {
+    @apply text-ink-300 hover:text-ink-100 hover:bg-ink-800 px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-ink-900 border border-ink-700 rounded-xl overflow-hidden;
+  }
+
+  .input {
+    @apply w-full bg-ink-800 border border-ink-600 text-ink-100 placeholder-ink-400
+           rounded-lg px-4 py-2.5 focus:outline-none focus:border-amber-500
+           focus:ring-1 focus:ring-amber-500 transition-all duration-200;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-ink-300 mb-1.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .seat-available {
+    @apply bg-emerald-500/20 border border-emerald-500/50 text-emerald-400
+           hover:bg-emerald-500/40 cursor-pointer transition-all duration-150;
+  }
+
+  .seat-booked {
+    @apply bg-ink-700 border border-ink-600 text-ink-500 cursor-not-allowed;
+  }
+
+  .seat-locked {
+    @apply bg-amber-500/20 border border-amber-500/50 text-amber-400 cursor-not-allowed;
+  }
+
+  .seat-selected {
+    @apply bg-amber-500 border border-amber-400 text-ink-950 cursor-pointer;
+  }
+
+  .seat-vip {
+    @apply ring-1 ring-amber-500/30;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-ink-900; }
+::-webkit-scrollbar-thumb { @apply bg-ink-600 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-ink-500; }
