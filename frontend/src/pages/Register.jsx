@@ -70,7 +70,7 @@ export default function Register() {
             <label className="label">Full name</label>
             <input type="text" required value={form.name}
               onChange={e => { setForm({...form, name: e.target.value}); setError('') }}
-              placeholder="Priya Sharma" className="input"/>
+              placeholder="Your name" className="input"/>
           </div>
           <div>
             <label className="label">Email</label>
