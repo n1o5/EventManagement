@@ -39,7 +39,7 @@ export default function ReviewSection({
             >
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-amber-100">
-                  {review.user_name || "Anonymous User"}
+                  {review.user.name || "Anonymous User"}
                 </p>
               
                 <div className="text-amber-400">
