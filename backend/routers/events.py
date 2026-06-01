@@ -143,7 +143,13 @@ def create_review(
     db.commit()
     db.refresh(review)
 
-    return review
+    return {
+        "id": review.id,
+        "rating": review.rating,
+        "comment": review.comment,
+        "created_at": review.created_at,
+        "user_name": current_user.name,
+    }
 
 
 @router.get("/{event_id}/reviews", response_model=List[ReviewOut])
