@@ -91,23 +91,9 @@ docker exec eventhub_backend python seed.py
 
 ---
 
-## Test Accounts (after seeding)
-
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@eventhub.in | admin123 |
-| Organizer | sports@eventhub.in | password123 |
-| Organizer | raj@eventhub.in | password123 |
-| Participant | alice@example.in | password123 |
-| Participant | priya@example.in | password123 |
-| Participant | karthik@example.in | password123 |
-
----
-
 ## Interactive API Docs
 
 FastAPI auto-generates docs at:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: https://eventhub-backend-m01d.onrender.com/docs
 
 ---
