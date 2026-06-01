@@ -1,7 +1,35 @@
 # EventHub — Full-Stack Event Management Platform
 
-A production-grade event management platform 
+## Features
 
+### User Features
+- Secure authentication and role-based access
+- Browse and search events
+- View event details and reviews
+- Book tickets with seat selection
+- Secure online payments
+- Access booking history
+
+### Organizer Features
+- Create, update, and manage events
+- Track registrations and attendees
+- Manage event listings through a dedicated dashboard
+
+### Admin Features
+- Manage users, organizers, and events
+- Moderate platform content
+- Monitor overall platform activity
+
+### Booking & Payments
+- Interactive seat selection
+- Real-time seat availability
+- Razorpay payment integration
+
+### Additional Features
+- Personalized event recommendations
+- Review and rating system
+- Real-time updates using WebSockets
+- Email service integration
 ---
 
 ## Tech Stack
@@ -16,55 +44,6 @@ A production-grade event management platform
 | Styling | Tailwind CSS |
 | State | Zustand |
 | HTTP Client | Axios |
-
----
-
-## Project Structure
-
-```
-event-platform/
-├── backend/
-│   ├── main.py                  # FastAPI app entry point
-│   ├── config.py                # Pydantic settings (.env)
-│   ├── database.py              # SQLAlchemy engine + session
-│   ├── models.py                # ORM models (all tables)
-│   ├── schemas.py               # Pydantic request/response schemas
-│   ├── auth.py                  # JWT utils + dependency injectors
-│   ├── seed.py                  # Dev data seeder
-│   ├── routers/
-│   │   ├── auth.py              # POST /register, /login, /me
-│   │   ├── events.py            # CRUD + seat map generation
-│   │   ├── bookings.py          # Solo ticket booking
-│   └── services/
-│       ├── seat_clustering.py   # Algorithmic consecutive-seat finder
-│       └── websocket_manager.py # Per-room WS broadcast manager
-└── frontend/
-    └── src/
-        ├── pages/
-        │   ├── Home.jsx               # Event discovery + search
-        │   ├── EventDetail.jsx        # Event info + booking CTAs
-        │   ├── BookTicket.jsx         # Solo booking / group room creation
-        │   ├── MyBookings.jsx         # User's ticket history
-        │   ├── CreateEvent.jsx        # Organizer event form
-        │   └── OrganizerDashboard.jsx # Stats + event management
-        ├── components/
-        │   ├── Navbar.jsx
-        │   ├── EventCard.jsx
-        │   ├── SeatMap.jsx            # Interactive seat grid
-        │   └── Toast.jsx
-        ├── api/client.js              # Axios instance + all API calls
-        └── store/useStore.js          # Zustand: auth + UI state
-```
-
----
-
-## Data Model
-
-```
-User ──< Event (organizer creates many events)
-Event ──< Seat (auto-generated on event creation)
-User ──< Booking ──< BookingSeat >── Seat
-```
 
 ---
 
@@ -83,45 +62,6 @@ docker exec eventhub_backend python seed.py
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000
 - API Docs: http://localhost:8000/docs
-
----
-
-### Option B: Local Dev
-
-**Prerequisites:** Python 3.12+, Node 20+, PostgreSQL running locally.
-
-#### 1. Database
-
-```bash
-createdb eventdb
-# or: psql -U postgres -c "CREATE DATABASE eventdb;"
-```
-
-#### 2. Backend
-
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-
-# Copy and edit env
-cp .env.example .env              # adjust DATABASE_URL if needed
-
-# Start API server
-uvicorn main:app --reload         # http://localhost:8000
-
-# Seed sample data (optional, separate terminal)
-python seed.py
-```
-
-#### 3. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev                       # http://localhost:5173
-```
 
 ---
 
