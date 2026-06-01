@@ -137,7 +137,6 @@ def create_review(
         comment=payload.comment,
         event_id=event_id,
         user_id=current_user.id,
-        user_name=current_user.name
     )
 
     db.add(review)
