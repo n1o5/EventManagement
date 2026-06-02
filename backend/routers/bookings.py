@@ -9,6 +9,8 @@ from services.email_service import send_ticket_email
 
 router = APIRouter(prefix="/api/bookings", tags=["bookings"])
 
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
 @router.post("", status_code=201)
 def create_booking(
@@ -20,7 +22,17 @@ def create_booking(
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
 
-    seats = db.query(Seat).filter(Seat.id.in_(payload.seat_ids)).all()
+    # SELECT ... FOR UPDATE
+    # This locks the rows at the DB level for the duration of the transaction.
+    # Any other transaction trying to read these same rows will block
+    # until this one commits or rolls back — not just skip past.
+    seats = (
+        db.query(Seat)
+        .filter(Seat.id.in_(payload.seat_ids))
+        .with_for_update()          # ← the key line
+        .all()
+    )
+
     if len(seats) != len(payload.seat_ids):
         raise HTTPException(status_code=400, detail="One or more seats not found")
 
@@ -28,7 +40,8 @@ def create_booking(
     if unavailable:
         raise HTTPException(
             status_code=409,
-            detail=f"Seats already taken: {[s.row_label + str(s.seat_number) for s in unavailable]}",
+            detail=f"Seats already taken: "
+                   f"{[s.row_label + str(s.seat_number) for s in unavailable]}",
         )
 
     total   = event.ticket_price * len(seats)
@@ -42,22 +55,9 @@ def create_booking(
     for seat in seats:
         seat.status = SeatStatus.booked
         db.add(BookingSeat(booking_id=booking.id, seat_id=seat.id))
-    db.commit()
+
+    db.commit()   # lock is released here
     db.refresh(booking)
-
-    try:
-        send_ticket_email(
-            to_email=current_user.email, user_name=current_user.name,
-            booking_id=booking.id, event_title=event.title,
-            event_date=event.event_date, venue=event.venue,
-            seats=[f"{s.row_label}{s.seat_number}" for s in seats],
-            total_amount=total,
-        )
-    except Exception:
-        pass
-
-    return _out(booking, event)
-
 
 @router.get("")
 def my_bookings(

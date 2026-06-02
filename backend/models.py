@@ -114,8 +114,9 @@ class BookingSeat(Base):
     booking_id = Column(String, ForeignKey("bookings.id"), nullable=False)
     seat_id    = Column(String, ForeignKey("seats.id"),    nullable=False)
 
-    booking = relationship("Booking", back_populates="booking_seats")
-    seat    = relationship("Seat")
+    __table_args__ = (
+        UniqueConstraint("seat_id", name="uq_booking_seat_unique"),
+    )   # ← one seat can only ever appear in one confirmed booking
 
 class Review(Base):
     __tablename__ = "reviews"
