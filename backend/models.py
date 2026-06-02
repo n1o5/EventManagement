@@ -110,14 +110,21 @@ class Booking(Base):
 class BookingSeat(Base):
     __tablename__ = "booking_seats"
 
-    id         = Column(String, primary_key=True, default=generate_uuid)
+    id = Column(String, primary_key=True, default=generate_uuid)
     booking_id = Column(String, ForeignKey("bookings.id"), nullable=False)
-    seat_id    = Column(String, ForeignKey("seats.id"),    nullable=False)
+    seat_id = Column(String, ForeignKey("seats.id"), nullable=False)
 
     __table_args__ = (
         UniqueConstraint("seat_id", name="uq_booking_seat_unique"),
-    )   # ← one seat can only ever appear in one confirmed booking
+    )
 
+    booking = relationship(
+        "Booking",
+        back_populates="booking_seats"
+    )
+
+    seat = relationship("Seat")
+    
 class Review(Base):
     __tablename__ = "reviews"
 
